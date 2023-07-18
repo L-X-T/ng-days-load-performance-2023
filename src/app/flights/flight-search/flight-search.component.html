@@ -1,0 +1,82 @@
+<div class="header">
+  <h1>Flight Search</h1>
+</div>
+
+<form #flightSearchForm="ngForm">
+  <div class="form-group">
+    <label>From:</label>
+    <input
+      [(ngModel)]="from"
+      [ngModelOptions]="{ updateOn: 'change' }"
+      autocomplete="false"
+      name="from"
+      class="form-control"
+      required="required"
+      [minlength]="minLength"
+      [maxlength]="maxLength"
+      [pattern]="pattern"
+    />
+  </div>
+
+  <div class="form-group">
+    <label>To:</label>
+    <input
+      [(ngModel)]="to"
+      name="to"
+      class="form-control"
+      required="required"
+      [minlength]="minLength"
+      [maxlength]="maxLength"
+      [pattern]="pattern"
+    />
+  </div>
+
+  <div class="form-group">
+    <button
+      class="btn btn-default"
+      [disabled]="!to || !from || flightSearchForm.invalid || flightSearchForm.pending"
+      (click)="onSearch()"
+    >
+      Search
+    </button>
+
+    <button *ngIf="flights.length > 0" class="btn btn-default" style="margin-left: 10px" (click)="onDelayFirstFlight()">
+      Delay 1st Flight
+    </button>
+  </div>
+</form>
+
+<div *ngIf="flights.length > 0" class="container">
+  <h3 class="title">Flights with Subscription</h3>
+  <div class="row">
+    <div *ngFor="let flight of flights" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <app-flight-card [item]="flight" [(isSelected)]="basket[flight.id]" (edit)="onEdit(flight.id)">
+        <app-flight-status-toggle style="margin-left: 10px" [(status)]="flight.delayed" />
+      </app-flight-card>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="flightsSubject | async as flights" class="container">
+  <h3 *ngIf="flights.length > 0" class="title">Flights with Aysnc Pipe</h3>
+  <div *ngIf="flights.length > 0" class="row">
+    <div *ngFor="let flight of flights" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <app-flight-card [item]="flight" [(isSelected)]="basket[flight.id]" (edit)="onEdit(flight.id)">
+        <app-flight-status-toggle style="margin-left: 10px" [(status)]="flight.delayed" />
+      </app-flight-card>
+    </div>
+  </div>
+</div>
+
+<!--<div *ngIf="computedSignal().length > 0" class="container">
+  <h3 class="title">Flights with Signal</h3>
+  <div class="row">
+    <div *ngFor="let flight of computedSignal()" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <app-flight-card [item]="flight" [(isSelected)]="basket[flight.id]" (edit)="onEdit(flight.id)">
+        <app-flight-status-toggle style="margin-left: 10px" [(status)]="flight.delayed" />
+      </app-flight-card>
+    </div>
+  </div>
+</div>-->
+
+<pre>{{ basket | json }}</pre>
