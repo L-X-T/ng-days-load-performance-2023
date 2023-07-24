@@ -12,8 +12,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import * as moment from 'moment';
-
 import { Flight } from '../../entities/flight';
 import { CityPipe } from '../../pipes/city.pipe';
 import { BlinkService } from '../../shared/blink.service';
@@ -73,10 +71,6 @@ export class FlightCardComponent implements OnInit, OnChanges {
       console.log('isSelected: ' + false);
     }
     this.isSelectedChange.emit(false);
-  }
-
-  getDate(item: Flight): string {
-    return moment(item.date).format('MM.DD.YYYY HH:mm');
   }
 
   blink(): void {
