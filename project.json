@@ -148,7 +148,7 @@
     "prerender": {
       "executor": "@nguniversal/builders:prerender",
       "options": {
-        "routes": ["/"]
+        "routes": ["/home", "/flights/flight-search"]
       },
       "configurations": {
         "production": {
